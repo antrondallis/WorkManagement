@@ -1,0 +1,42 @@
+<body class="d-flex flex-column">
+  
+  <main class="m-auto">
+    <div class="container-fluid">
+      <div class="card login-card">
+        <div class="card-body">
+          <div>
+                <img src="../../../assets/img/wm-logo1.png" class="center"
+                  alt="Work Management Logo">  
+          </div>
+          <!-- <h2 class="login-card-title">Work Management</h2> -->
+          <p class="login-card-description">Sign into your account</p>
+          <form #loginForm="ngForm" (ngSubmit)="login()">
+            <div class="form-group">
+              <input required type="text" name="username" class="form-control" placeholder="Username" required [(ngModel)]="model.username">
+            </div>
+            <div class="form-group">
+              <input required type="password" name="password" id="password" class="form-control" placeholder="Password" required [(ngModel)]="model.password">
+            </div>
+            <div class="form-options-wrapper">
+              <div class="custom-control custom-checkbox login-card-check-box">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember me(not working)</label>
+              </div>
+            </div>
+            <button [disabled]="!loginForm.valid" class="btn btn-block login-btn" type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-content-wrapper">
+        <p class="mb-sm-0">Copyright 2020  WorkManagementSystems Inc.</p>
+      </div>
+    </div>
+  </footer>
+  
+</body>
+
+
