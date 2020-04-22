@@ -1,5 +1,135 @@
-
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+  <!-- Total Open Work Orders -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Work Orders</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">14</div>
+          </div>
+          <div class="col-auto">
+            <fa name="globe" size="2x" class="text-gray-300"></fa>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assigned Open -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assigned</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">7</div>
+          </div>
+          <div class="col-auto">
+            <fa name="clipboard" size="2x" class="text-gray-300"></fa>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assigned >2 Weeks -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-danger shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assigned > 2 Wks</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+          </div>
+          <div class="col-auto">
+            <fa name="calendar" size="2x" class="text-gray-300"></fa>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <!-- Unassigned -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Unassigned</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+          </div>
+          <div class="col-auto">
+            <fa name="users" size="2x" class="text-gray-300"></fa>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Assigned WorkOrders Table -->
+<div class="card shadow mb-4">
+
+  <div class="card-header py-3">
+    <h6 class="m-0 fontweight-bold text-primary">Assigned Work Orders</h6>
+  </div>
+
+  <div class="card-body">
+    <div *ngIf="workOrders?.length > 0" class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Request Date</th>
+            <th>Work Order Type</th>
+            <th>Title</th>
+            <th>Request For</th>
+            <th>Apartment No.</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Request Date</th>
+            <th>Work Order Type</th>
+            <th>Title</th>
+            <th>Request For</th>
+            <th>Apartment No.</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <ng-container *ngFor="let workOrder of workOrders">
+            <tr>
+              <td>{{workOrder.requestDate | date: 'MM/dd/yyyy h:mm a'}}</td>
+              <td>{{workOrder.workOrderType}}</td>
+              <td>{{workOrder.title}}</td>
+              <td>{{workOrder.requestFor}}</td>
+              <td>{{workOrder.apartmentNo}}</td>
+              <td>{{workOrder.status}}</td>
+              <td>
+                <a [routerLink]="[ '/work-order-detail', workOrder.id ]">
+                  <button class="btn btn-primary">Details</button>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="workOrders?.length <= 0" class="table-responsive">
+      No Work Orders Assigned
+    </div>
+  </div>
 </div>

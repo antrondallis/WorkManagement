@@ -12,6 +12,11 @@ import { AuthService } from './_services/auth.service';
 import { LoginModule } from './_modules/login/login.module';
 import { AdminLayoutComponent } from './_modules/admin-layout/admin-layout.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+   return localStorage.getItem('token');
+ }
 
 @NgModule({
    declarations: [
@@ -27,7 +32,14 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
       ReactiveFormsModule,
       LoginModule,
       AppRoutingModule,
-      AngularFontAwesomeModule
+      AngularFontAwesomeModule,
+      JwtModule.forRoot({
+         config: {
+           tokenGetter,
+           whitelistedDomains: ['localhost:44342'],
+           blacklistedRoutes: ['localhost:44342/api/auth']
+         }
+       })
    ],
    providers: [
       AuthService
