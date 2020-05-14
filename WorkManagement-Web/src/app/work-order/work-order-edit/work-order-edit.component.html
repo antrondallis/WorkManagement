@@ -1,0 +1,220 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Work Order Edit</h1>
+</div>
+
+<!-- Work Order Edit -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 fontweight-bold text-primary">Work Order Edit</h6>
+  </div>
+
+  <div class="card-body">
+    <form name="editform" id="editForm" #editForm="ngForm" (ngSubmit)="updateWorkOrder(editForm)">
+      <div class="row row-space">
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Work Order Id</mat-label>
+            <input
+              name="workOrderId"
+              matInput
+              disabled
+              value="{{ workOrder?.id }}"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-5 text-right">
+          <!-- work around if null id is passed -->
+          <button
+            mat-raised-button
+            form="editForm"
+            [disabled]="!editForm.dirty"
+            class="btn btn-primary btn-xl"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Request Date</mat-label>
+            <input
+              matInput
+              disabled
+              value="{{ workOrder?.requestDate | date: 'MM/dd/yyyy h:mm a' }}"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Work Order Type</mat-label>
+            <mat-select name="workOrderType" #workOrderType [(ngModel)]="selectedTypeId">
+              <mat-option
+                *ngFor="let workOrderType of workOrderTypes"
+                [value]="workOrderType.id"
+                >{{ workOrderType.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-10">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput disabled value="{{ workOrder?.title }}" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-10">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput disabled>
+ {{ workOrder?.description }} </textarea
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Apartment No</mat-label>
+            <input
+              matInput
+              disabled
+              value="{{ workOrder?.requestFor.apartmentNo }}"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Tenant Name</mat-label>
+            <input
+              matInput
+              disabled
+              value="{{ workOrder?.requestFor.firstName }} {{
+                workOrder?.requestFor.lastName
+              }}"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Assigned To</mat-label>
+            <input
+              matInput
+              disabled
+              value="{{ workOrder?.assignedTo.firstName }} {{
+                workOrder?.assignedTo.lastName
+              }}"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Submitted By</mat-label>
+            <input
+              matInput
+              disabled
+              value="{{ workOrder?.submittedBy.userName }}"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-3">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select name="workOrderStatus" [(ngModel)]="selectedStatusId">
+              <mat-option *ngFor="let code of workOrderStatusCodes" [value]="code.id">
+                {{code.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+
+    <!-- Line Break -->
+    <!-- Work Order Notes -->
+    <hr />
+    <div class="row row-space mb-2">
+      <div class="col-6">
+        <h3>Notes</h3>
+      </div>
+      <div class="col-6 text-right">
+        <button (click)="openNotesDialog()" class="btn btn-success btn">
+          Add Notes..
+        </button>
+      </div>
+    </div>
+    <div *ngIf="workOrder?.workOrderNotes.length > 0" class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            <th>Create Date</th>
+            <th>Note</th>
+            <th>Logged By</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Create Date</th>
+            <th>Note</th>
+            <th>Logged By</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <ng-container *ngFor="let workOrderNote of workOrder?.workOrderNotes">
+            <tr>
+              <td>
+                {{ workOrderNote.createDate | date: "MM/dd/yyyy h:mm a" }}
+              </td>
+              <td>{{ workOrderNote.note }}</td>
+              <td>
+                {{ workOrderNote.createdBy.firstName }}
+                {{ workOrderNote.createdBy.lastName }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div
+      *ngIf="workOrder?.workOrderNotes.length === 0"
+      class="table-responsive"
+    >
+      No notes added for this Work Order
+    </div>
+  </div>
+</div>

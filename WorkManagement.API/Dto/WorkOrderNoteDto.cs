@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WorkManagement.API.Models
+namespace WorkManagement.API.Dto
 {
-    public class WorkOrderNote
+    public class WorkOrderNoteDto
     {
         public int Id { get; set; }
-        public int WorkOrderId { get; set; }
         public string Note { get; set; }
         public DateTime CreateDate { get; set; }
-        public User CreatedBy { get; set; }
+        public UserFullNameDto CreatedBy { get; set; }
 
-        public WorkOrderNote()
+        public WorkOrderNoteDto()
         {
-            CreatedBy = new User();
+            CreatedBy = new UserFullNameDto();
         }
     }
 }

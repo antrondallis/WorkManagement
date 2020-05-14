@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Add New Note</h1>
+<hr>
+<form #addNoteForm="ngForm" (ngSubmit)="addNote()">
+  <div mat-dialog-content>
+    <div class="row row-space">
+      <div class="col-10">
+        <mat-form-field style="width:100%" appearance="fill">
+          <mat-label>Work Order Note</mat-label>
+          <textarea required name="note" matInput [(ngModel)]="data.note"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      [mat-dialog-close]="data.note" 
+      cdkFocusInitial
+      [disabled]="!addNoteForm.valid">
+        Add Note
+    </button>
+  </div>
+</form>

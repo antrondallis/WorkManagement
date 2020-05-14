@@ -5,6 +5,7 @@ import { UserService } from '../_services/user.service';
 import { WorkOrderService } from '../_services/work-order.service';
 import { WorkOrder } from '../_models/workorder';
 import { AlertifyService } from '../_services/alertify.service';
+import { DashboardCount } from '../_models/dashboardcount';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { AlertifyService } from '../_services/alertify.service';
 })
 export class HomeComponent implements OnInit {
   workOrders: WorkOrder[];
+  dashboardCount: DashboardCount;
   user: User;
   title = 'Dashboard';
 
@@ -24,19 +26,17 @@ export class HomeComponent implements OnInit {
     this.workOrderService.getAllByUser(this.user.id).subscribe(
       data => {
         this.workOrders = data;
-        console.log(this.workOrders);
       }
     );
-    // this.GetAllByUser(this.user.id);
+    this.GetDashboardCounts();
   }
 
-  GetAllByUser(userId) {
-    this.workOrderService.getAllByUser(userId).subscribe((workOrders: WorkOrder[]) => {
-      this.workOrders = workOrders;
-      console.log(this.workOrders.length);
-    }, error => {
-      this.alertify.error(error);
-    });
+  GetDashboardCounts() {
+    this.workOrderService.getCountsForDashboard(this.user.id).subscribe(
+      data => {
+        this.dashboardCount = data;
+      }
+    );
   }
 
 }

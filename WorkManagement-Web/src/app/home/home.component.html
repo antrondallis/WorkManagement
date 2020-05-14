@@ -14,7 +14,7 @@
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Work Orders</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">14</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{dashboardCount?.totalWorkOrders}} </div>
           </div>
           <div class="col-auto">
             <fa name="globe" size="2x" class="text-gray-300"></fa>
@@ -31,7 +31,7 @@
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assigned</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">7</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{dashboardCount?.assignedWorkOrders}} </div>
           </div>
           <div class="col-auto">
             <fa name="clipboard" size="2x" class="text-gray-300"></fa>
@@ -48,7 +48,7 @@
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assigned > 2 Wks</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{dashboardCount?.ageTwoWeeks}} </div>
           </div>
           <div class="col-auto">
             <fa name="calendar" size="2x" class="text-gray-300"></fa>
@@ -65,7 +65,7 @@
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Unassigned</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{dashboardCount?.unassigned}} </div>
           </div>
           <div class="col-auto">
             <fa name="users" size="2x" class="text-gray-300"></fa>

@@ -11,17 +11,145 @@
   </div>
 
   <div class="card-body">
-    <div class="row">
-
-      <div class="row-1 row-space-1">
-        <!-- Request Date -->
-        <div class="col-2-1">
-          <div class="input-group-1">
-            <input type="text" class="input--style-1" placeholder="Request Date">
-          </div>
-          <input class="form-control" type="text" name="" id="">
-        </div>
+    <div class="row row-space">
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Work Order Id</mat-label>
+          <input matInput disabled value="{{workOrder?.id}}" > 
+        </mat-form-field>
+      </div>
+      <div class="col-5 text-right">
+        <!-- work around if null id is passed -->
+        <a [routerLink]="[ '/work-order-edit', workOrder?.id || 'all']">
+          <button class="btn btn-primary btn-xl">Edit</button>
+        </a>
       </div>
     </div>
+
+    <!-- Line Break -->
+
+    <div class="row row-space">
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Request Date</mat-label>
+          <input matInput disabled value="{{workOrder?.requestDate | date: 'MM/dd/yyyy h:mm a'}}" > 
+        </mat-form-field>
+      </div>
+      
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Work Order Type</mat-label>
+          <input matInput disabled value="{{workOrder?.workOrderType}}" >
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Line Break -->
+
+    <div class="row row-space">
+      <div class="col-10">
+        <mat-form-field  class="full-width" appearance="fill">
+          <mat-label>Title</mat-label>
+          <input matInput disabled value="{{workOrder?.title}}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Line Break -->
+
+    <div class="row row-space">
+      <div class="col-10">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput disabled> {{workOrder?.description}} </textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <!-- Line Break -->
+
+    <div class="row row-space">
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Apartment No</mat-label>
+          <input matInput disabled value="{{workOrder?.requestFor.apartmentNo}}">
+        </mat-form-field>
+      </div>
+      
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Tenant Name</mat-label>
+          <input matInput disabled value="{{workOrder?.requestFor}}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Line Break -->
+
+    <div class="row row-space">
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Assigned To</mat-label>
+          <input matInput disabled value="{{workOrder?.assignedTo}}">
+        </mat-form-field>
+      </div>
+      
+      <div class="col-5">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Submitted By</mat-label>
+          <input matInput disabled value="{{workOrder?.submittedBy}}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Line Break -->
+
+    <div class="row row-space">
+      <div class="col-3">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Status</mat-label>
+          <input matInput disabled value="{{workOrder?.status}}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Line Break -->
+    <hr />
+    <div class="row row-space">
+      <div class="col-6">
+        <h3>Notes</h3>
+      </div>
+    </div>
+    <div *ngIf="workOrder?.workOrderNotes.length > 0" class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Create Date</th>
+            <th>Note</th>
+            <th>Logged By</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Create Date</th>
+            <th>Note</th>
+            <th>Logged By</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <ng-container *ngFor="let workOrderNote of workOrder?.workOrderNotes">
+            <tr>
+              <td>{{workOrderNote.createDate | date: 'MM/dd/yyyy h:mm a'}}</td>
+              <td>{{workOrderNote.note}}</td>
+              <td>{{workOrderNote.createdBy.firstName}}  {{workOrderNote.createdBy.lastName}} </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="workOrder?.workOrderNotes.length === 0" class="table-responsive">
+      No notes added for this Work Order
+    </div>
+    
   </div>
 </div>

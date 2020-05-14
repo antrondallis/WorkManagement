@@ -18,6 +18,11 @@ namespace WorkManagement.API.Dto
         public string RequestFor { get; set; }
         public string SubmittedBy { get; set; }
         public string Status { get; set; }
-        public List<WorkOrderNote> WorkOrderNotes { get; set; }
+        public List<WorkOrderNoteDto> WorkOrderNotes { get; set; }
+
+        public WorkOrderForDetailDto()
+        {
+            WorkOrderNotes = new List<WorkOrderNoteDto>();
+        }
     }
 }

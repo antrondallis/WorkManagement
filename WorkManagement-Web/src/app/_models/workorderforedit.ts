@@ -1,10 +1,10 @@
-import { WorkOrderNote } from './workordernote';
 import { WorkOrderType } from './workordertype';
-import { WorkOrderStatusCode } from './workorderstatuscode';
 import { User } from './user';
 import { Tenant } from './tenant';
+import { WorkOrderStatusCode } from './workorderstatuscode';
+import { WorkOrderNote } from './workordernote';
 
-export interface WorkOrder {
+export interface WorkOrderForEdit {
     id: number;
     requestDate: Date;
     title: string;

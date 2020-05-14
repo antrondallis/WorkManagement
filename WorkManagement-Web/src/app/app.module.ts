@@ -13,6 +13,7 @@ import { LoginModule } from './_modules/login/login.module';
 import { AdminLayoutComponent } from './_modules/admin-layout/admin-layout.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { JwtModule } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -39,7 +40,8 @@ export function tokenGetter() {
            whitelistedDomains: ['localhost:44342'],
            blacklistedRoutes: ['localhost:44342/api/auth']
          }
-       })
+       }),
+      BrowserAnimationsModule
    ],
    providers: [
       AuthService
