@@ -14,6 +14,11 @@ import { WorkOrderStatusCode } from 'src/app/_models/workorderstatuscode';
 import { WorkOrderNotesAddDialogComponent } from '../work-order-notes-add-dialog/work-order-notes-add-dialog.component';
 import { WorkOrderNote } from 'src/app/_models/workordernote';
 import { UserService } from 'src/app/_services/user.service';
+import { WorkOrderUpdateDto } from 'src/app/_models/dto/workorderupdatedto';
+import { WorkOrderConfirmCloseComponent } from '../work-order-confirm-close/work-order-confirm-close.component';
+import { Formatter } from 'src/app/helpers/formatter';
+import { User } from 'src/app/_models/user';
+import { WorkOrderAssignDto } from 'src/app/_models/dto/updateworkorderassigndto';
 
 @Component({
   selector: 'app-work-order-edit',
@@ -29,12 +34,14 @@ export class WorkOrderEditComponent implements OnInit {
   workOrderStatusCodes: WorkOrderStatusCode[];
   selectedTypeId = 0;
   selectedStatusId = 0;
+  closed: boolean;
+  user: User;
 
   editForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private workOrderService: WorkOrderService,
               private alertify: AlertifyService, private ngZone: NgZone, private dialog: MatDialog,
-              private userService: UserService) { }
+              private userService: UserService, private formatter: Formatter) { }
 
   @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
 
@@ -52,6 +59,7 @@ export class WorkOrderEditComponent implements OnInit {
     this.workOrderService.getByIdForEdit(this.workOrderId).subscribe((workOrder: WorkOrder) => {
       this.workOrder = workOrder;
       this.selectedTypeId = this.workOrder.workOrderType.id;
+      this.formatter.formatAssignName(this.workOrder.assignedTo);
       this.selectedStatusId = this.workOrder.status.id;
     }, error => {
       this.alertify.error(error);
@@ -94,7 +102,7 @@ export class WorkOrderEditComponent implements OnInit {
           if (!httpStatusCode) {
             // should modify this in the future to only pull the notes for the work order
             this.GetByIdForEdit();
-            this.alertify.success('New note added');
+            this.alertify.message('New note added');
           } else {
             this.alertify.error('There was an error adding this note. Please try again');
           }
@@ -103,10 +111,89 @@ export class WorkOrderEditComponent implements OnInit {
     });
   }
 
-  updateWorkOrder(editForm: FormGroup) {
-    editForm.reset();
-    this.alertify.success('Changes to work order were successful');
-    this.GetByIdForEdit();
+  // confirm closing the work order
+  confirmCloseDialog(): boolean {
+    const closeOrder = false;
+    const dialogRef = this.dialog.open(WorkOrderConfirmCloseComponent, {
+      width: '350px',
+      height: '350px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+
+    return closeOrder;
+  }
+
+  /* TODO: find a way to get rid of duplicate code
+  for this method */
+  updateWorkOrder(editForm: FormGroup): void {
+    const user = this.userService.getLoginUser();
+    let canClose: boolean;
+    const updatedWorkOrder: WorkOrderUpdateDto = {
+      id: this.workOrderId,
+      description: this.workOrder.description,
+      workOrderType: { id: this.selectedTypeId},
+      status: { id: this.selectedStatusId}
+    };
+
+    // if work order status is set to 'Closed' display a modal
+    // to confirm the user wants to close the work order
+    if (updatedWorkOrder.status.id === 5) {
+      const dialogRef = this.dialog.open(WorkOrderConfirmCloseComponent, {
+        width: '350px',
+        height: '350px',
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        canClose = result;
+        if (result) {
+          this.workOrderService.updateWorkOrder(updatedWorkOrder, user.id).subscribe((httpsStatusCode: number) => {
+            if (!httpsStatusCode) {
+              this.alertify.message('Work order is closed');
+              editForm.reset();
+              this.GetByIdForEdit();
+            } else {
+              this.alertify.error('There was an error adding this note. Please try again');
+            }
+          });
+        }
+      });
+      // process the workOrderService -> update normally
+    } else {
+      this.workOrderService.updateWorkOrder(updatedWorkOrder, user.id).subscribe((httpsStatusCode: number) => {
+        if (!httpsStatusCode) {
+          this.alertify.success('Changes to work order were successful');
+          editForm.reset();
+          this.GetByIdForEdit();
+        } else {
+          this.alertify.error('There was an error adding this note. Please try again');
+        }
+      });
+    }
+  }
+
+  assignToLoggedInUser() {
+    this.user = this.userService.getLoginUser();
+    if (this.user.id === this.workOrder.assignedTo.id) {
+      this.alertify.error('This Work Order is already assigned to you');
+    } else {
+      const updateAssignedWorkOrder: WorkOrderAssignDto = {
+        id: this.workOrder.id,
+        assignToId: this.user.id
+      };
+      this.workOrderService.assignToLoggedInUser(updateAssignedWorkOrder).subscribe((httpsStatuscode: number) => {
+        if (!httpsStatuscode) {
+          this.GetByIdForEdit();
+          this.alertify.message('This Work Order is now assigned to you');
+        } else {
+          this.alertify.error('There was an error adding this note. Please try again');
+        }
+      });
+    }
   }
 
   triggerResize() {

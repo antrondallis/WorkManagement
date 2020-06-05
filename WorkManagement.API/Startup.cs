@@ -37,6 +37,7 @@ namespace WorkManagement.API
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IWorkOrderRepository, WorkOrderRepository>();
+            services.AddScoped<ITenantRepository, TenantRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

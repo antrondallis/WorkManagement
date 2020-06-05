@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Threading.Tasks;
+using WorkManagement.API.Dto;
 using WorkManagement.API.Models;
 using WorkManagement.API.Repository;
 
@@ -26,14 +27,35 @@ namespace WorkManagement.API.Controllers
             _workOrderRepository = workOrderRepository;
         }
 
-        [HttpGet("GetAllByUser/{userId}")]
-        public IActionResult GetAllByUser(int userId)
+        [HttpPost("CreateWorkOrder")]
+        public async Task<IActionResult> CreateWorkOrder(WorkOrderForCreateDto workOrderForCreate)
         {
-            var result = _workOrderRepository.GetAllByUser(userId);
+            var result = await _workOrderRepository.CreateWorkOrder(workOrderForCreate);
+            return CreatedAtRoute("GetById", new { id = result.Id }, result);
+        }
+
+        [HttpGet("GetAllOpen")]
+        public async Task<IActionResult> GetAllOpen()
+        {
+            var result = await _workOrderRepository.GetAllOpen();
             return Ok(result);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("GetAllByUser/{userId}")]
+        public async Task<IActionResult> GetAllByUser(int userId)
+        {
+            var result = await _workOrderRepository.GetAllByUser(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllOpenByUser/{userId}")]
+        public async Task<IActionResult> GetAllOpenByUser(int userId)
+        {
+            var result = await _workOrderRepository.GetAllOpenByUser(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("GetById/{id}", Name = "GetById")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _workOrderRepository.GetById(id);
@@ -83,7 +105,18 @@ namespace WorkManagement.API.Controllers
         {
             if (userId == 0 || workOrder.Id == 0)
                 return BadRequest();
+
             var result = await _workOrderRepository.UpdateWorkOrder(userId, workOrder);
+            if (result == HttpStatusCode.NoContent)
+                return StatusCode(StatusCodes.Status204NoContent);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        [HttpPut("AssignToLoggedInUser")]
+        public async Task<IActionResult> AssignToLoggedInUser(WorkOrderAssignDto workOrder)
+        {
+            var result = await _workOrderRepository.AssignToLoggedInUser(workOrder);
             if (result == HttpStatusCode.NoContent)
                 return StatusCode(StatusCodes.Status204NoContent);
 

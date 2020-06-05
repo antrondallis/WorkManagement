@@ -11,5 +11,6 @@ namespace WorkManagement.API.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ApartmentNo { get; set; }
+        public bool IsCurrentResident { get; set; }
     }
 }

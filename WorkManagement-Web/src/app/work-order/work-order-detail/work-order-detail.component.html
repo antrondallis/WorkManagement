@@ -39,7 +39,7 @@
       <div class="col-5">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Work Order Type</mat-label>
-          <input matInput disabled value="{{workOrder?.workOrderType}}" >
+          <input matInput disabled value="{{workOrder?.workOrderType.name}}" >
         </mat-form-field>
       </div>
     </div>
@@ -79,7 +79,10 @@
       <div class="col-5">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Tenant Name</mat-label>
-          <input matInput disabled value="{{workOrder?.requestFor}}">
+          <input 
+            matInput 
+            disabled 
+            value="{{workOrder?.requestFor.firstName}} {{workOrder?.requestFor.lastName}}">
         </mat-form-field>
       </div>
     </div>
@@ -90,14 +93,17 @@
       <div class="col-5">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Assigned To</mat-label>
-          <input matInput disabled value="{{workOrder?.assignedTo}}">
+            <input 
+            matInput
+            disabled 
+            value="{{workOrder?.assignedTo.firstName}} {{workOrder?.assignedTo.lastName}}">
         </mat-form-field>
       </div>
       
       <div class="col-5">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Submitted By</mat-label>
-          <input matInput disabled value="{{workOrder?.submittedBy}}">
+          <input matInput disabled value="{{workOrder?.submittedBy.userName}}">
         </mat-form-field>
       </div>
     </div>
@@ -108,7 +114,7 @@
       <div class="col-3">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Status</mat-label>
-          <input matInput disabled value="{{workOrder?.status}}">
+          <input matInput disabled value="{{workOrder?.status.name}}">
         </mat-form-field>
       </div>
     </div>

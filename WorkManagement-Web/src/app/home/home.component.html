@@ -113,11 +113,11 @@
           <ng-container *ngFor="let workOrder of workOrders">
             <tr>
               <td>{{workOrder.requestDate | date: 'MM/dd/yyyy h:mm a'}}</td>
-              <td>{{workOrder.workOrderType}}</td>
+              <td>{{workOrder.workOrderType.name}}</td>
               <td>{{workOrder.title}}</td>
-              <td>{{workOrder.requestFor}}</td>
-              <td>{{workOrder.apartmentNo}}</td>
-              <td>{{workOrder.status}}</td>
+              <td>{{workOrder.requestFor.firstName}} {{workOrder.requestFor.lastName}}</td>
+              <td>{{workOrder.requestFor.apartmentNo}}</td>
+              <td>{{workOrder.status.name}}</td>
               <td>
                 <a [routerLink]="[ '/work-order-detail', workOrder.id ]">
                   <button class="btn btn-primary">Details</button>

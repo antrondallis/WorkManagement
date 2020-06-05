@@ -21,6 +21,41 @@
             <span>Dashboard</span>
         </a>
     </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+      <a class="nav-link collapsed dropdown-toggle" href="#" data-target="#collapseTwo"  data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
+        <fa name="fas fa-fw fa-cog"></fa>
+        <span>Work Orders</span>
+      </a>
+      <!-- Current working version (kinda) -->
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Options:</h6>
+          <a class="collapse-item" [routerLink]="[ '/work-order-all' ]">View All</a>
+          <a class="collapse-item" [routerLink]="[ '/work-order-new' ]">Create New</a>
+        </div>
+      </div>
+      <!-- End of version -->
+
+    </li>
+
+    <!-- <li class="nav-item">
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header>
+          <fa name="fas fa-fw fa-cog"></fa>
+          <span>Work Orders</span>
+        </mat-expansion-panel-header>
+      
+        <div class="bg-white expansion-sidebar py-2 rounded">
+          <h6 class="expansion-panel">Options:</h6>
+          <a class="collapse-item" href="buttons.html">Buttons</a>
+          <a class="collapse-item" href="cards.html">Cards</a>
+        </div>
+      </mat-expansion-panel>
+    </li> -->
   </ul>
   <!-- End of Sidebar -->
 

@@ -1,0 +1,24 @@
+.expansion-panel {
+    background: none !important;
+    box-shadow: none !important;
+    color: rgba(255,255,255,.8);
+}
+
+.expansion-collapse {
+    margin: 0;
+    white-space: nowrap;
+    padding: .5rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: .65rem;
+    color: #b7b9cc;
+}
+
+.expansion-sidebar {
+    padding: .5rem 0;
+    min-width: 10rem;
+    font-size: .85rem;
+    margin: 0 0 1rem 0;
+}
+
+/* /deep/ .mat-expansion-indicator::after, .mat-expansion-panel-header-description { color: rgba(255,255,255,.8)} */

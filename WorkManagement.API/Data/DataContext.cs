@@ -7,11 +7,12 @@ using WorkManagement.API.Models;
 
 namespace WorkManagement.API.Data
 {
-    public class DataContext: DbContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        
+
         public DbSet<Value> Value { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<WorkOrder> WorkOrder { get; set; }
     }
 }

@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.userService.getLoginUser();
-    this.workOrderService.getAllByUser(this.user.id).subscribe(
+    this.workOrderService.getAllOpenByUser(this.user.id).subscribe(
       data => {
         this.workOrders = data;
       }

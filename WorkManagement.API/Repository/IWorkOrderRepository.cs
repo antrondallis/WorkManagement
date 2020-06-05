@@ -10,14 +10,17 @@ namespace WorkManagement.API.Repository
 {
     public interface IWorkOrderRepository
     {
-        List<WorkOrderForListDto> GetAllByUser(int userId);
-        Task<WorkOrderForDetailDto> GetById(int id);
+        Task<List<WorkOrder>> GetAllOpen();
+        Task<List<WorkOrder>> GetAllByUser(int userId);
+        Task<List<WorkOrder>> GetAllOpenByUser(int userId);
+        Task<WorkOrder> GetById(int id);
         Task<DashboardCountDto> GetCountsForDashboard(int userId);
         Task<List<WorkOrderType>> GetWorkOrderTypes();
         Task<List<WorkOrderStatusCode>> GetWorkOrderStatusCodes();
-        Task<WorkOrderForEditDto> GetWorkOrderForEdit(int id);
+        Task<WorkOrder> GetWorkOrderForEdit(int id);
         Task<HttpStatusCode> AddWorkOrderNote(WorkOrderNote workOrderNote);
         Task<HttpStatusCode> UpdateWorkOrder(int userId, WorkOrder workOrder);
-
+        Task<HttpStatusCode> AssignToLoggedInUser(WorkOrderAssignDto workOrder);
+        Task<WorkOrder> CreateWorkOrder(WorkOrderForCreateDto workOrderForCreate);
     }
 }

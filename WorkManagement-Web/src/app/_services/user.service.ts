@@ -14,4 +14,9 @@ export class UserService {
     return JSON.parse(localStorage.getItem('user'));
   }
 
+  getLoginUserId() {
+    this.currentUser = JSON.parse(localStorage.getItem('user'));
+    return this.currentUser.id;
+  }
+
 }

@@ -20,7 +20,7 @@ namespace WorkManagement.API.Repository
 
         public async Task<User> Login(string username, string password)
         {
-            var user = await _context.User.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.UserName == username);
 
             if (user == null)
                 return null;
@@ -49,7 +49,7 @@ namespace WorkManagement.API.Repository
             int i = 0;
             var username = $"{user.FirstName.Substring(0, 1).ToLower()}{user.LastName.ToLower()}";
             //check if username already exists
-            while(await _context.User.AnyAsync(x => x.Username == username))
+            while(await _context.User.AnyAsync(x => x.UserName == username))
             {
                 i += 1;
                 username = $"{username}{i.ToString()}";

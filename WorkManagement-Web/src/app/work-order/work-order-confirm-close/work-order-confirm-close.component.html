@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Close Work Order</h1>
+<hr>
+<div mat-dialog-content>
+  <div class="row row-space">
+    <div class="col-10">
+        <p>You are about to close this work order. Are you sure?</p>
+        <sub><i>This action cannot be undone.</i></sub>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(true)">Confirm Close
+  </button>
+</div>

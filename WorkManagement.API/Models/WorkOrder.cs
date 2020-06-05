@@ -16,5 +16,16 @@ namespace WorkManagement.API.Models
         public Tenant RequestFor { get; set; }
         public User SubmittedBy { get; set; }
         public WorkOrderStatusCode Status { get; set; }
+        public List<WorkOrderNote> WorkOrderNotes { get; set; }
+
+        public WorkOrder()
+        {
+            WorkOrderType = new WorkOrderType();
+            AssignedTo = new User();
+            RequestFor = new Tenant();
+            SubmittedBy = new User();
+            Status = new WorkOrderStatusCode();
+            WorkOrderNotes = new List<WorkOrderNote>();
+        }
     }
 }

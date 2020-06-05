@@ -11,6 +11,9 @@
 
   <div class="card-body">
     <form name="editform" id="editForm" #editForm="ngForm" (ngSubmit)="updateWorkOrder(editForm)">
+      <div class="row row-space mb-4" *ngIf="workOrder?.status.id == 5">
+        <h3 class="m-0 fontweight-bold text-danger">THIS WORK ORDER IS CLOSED. NO CHANGES CAN BE MADE</h3>
+      </div>
       <div class="row row-space">
         <div class="col-5">
           <mat-form-field class="full-width" appearance="fill">
@@ -53,13 +56,16 @@
         <div class="col-5">
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>Work Order Type</mat-label>
-            <mat-select name="workOrderType" #workOrderType [(ngModel)]="selectedTypeId">
+            <mat-select *ngIf="workOrder?.status.id < 5" name="workOrderType" #workOrderType [(ngModel)]="selectedTypeId">
               <mat-option
                 *ngFor="let workOrderType of workOrderTypes"
                 [value]="workOrderType.id"
                 >{{ workOrderType.name }}</mat-option
               >
             </mat-select>
+
+            <input *ngIf="workOrder?.status.id == 5" 
+              matInput disabled value="{{workOrder?.workOrderType.name}}" >
           </mat-form-field>
         </div>
       </div>
@@ -122,13 +128,10 @@
         <div class="col-5">
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>Assigned To</mat-label>
-            <input
-              matInput
-              disabled
-              value="{{ workOrder?.assignedTo.firstName }} {{
-                workOrder?.assignedTo.lastName
-              }}"
-            />
+            <input 
+            matInput
+            disabled 
+            value="{{workOrder?.assignedTo.firstName}} {{workOrder?.assignedTo.lastName}}">
           </mat-form-field>
         </div>
 
@@ -150,12 +153,30 @@
         <div class="col-3">
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>Status</mat-label>
-            <mat-select name="workOrderStatus" [(ngModel)]="selectedStatusId">
+            <mat-select *ngIf="workOrder?.status.id < 5" 
+              name="workOrderStatus" [(ngModel)]="selectedStatusId">
               <mat-option *ngFor="let code of workOrderStatusCodes" [value]="code.id">
                 {{code.name}}
               </mat-option>
             </mat-select>
+
+            <input *ngIf="workOrder?.status.id == 5" 
+	            matInput disabled value="{{workOrder?.status.name}}" >
           </mat-form-field>
+        </div>
+
+        <div class="col-5 text-right">
+          <a
+            mat-raised-button
+            [matMenuTriggerFor]="belowMenu"
+            color="accent"
+            class="btn btn-primary btn-xl">
+            Assign Work Order
+          </a>
+          <mat-menu #belowMenu="matMenu" yPosition="below">
+            <button mat-menu-item (click)="assignToLoggedInUser()"><fa name="fas fa-fw fa-user"></fa>To Me</button>
+            <button mat-menu-item><fa name="fas fa-search"></fa>Other User</button>
+          </mat-menu>
         </div>
       </div>
     </form>
@@ -167,7 +188,7 @@
       <div class="col-6">
         <h3>Notes</h3>
       </div>
-      <div class="col-6 text-right">
+      <div *ngIf="workOrder?.status.id < 5" class="col-6 text-right">
         <button (click)="openNotesDialog()" class="btn btn-success btn">
           Add Notes..
         </button>

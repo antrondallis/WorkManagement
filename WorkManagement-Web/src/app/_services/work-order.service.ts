@@ -8,6 +8,8 @@ import { WorkOrderType } from '../_models/workordertype';
 import { map } from 'rxjs/operators';
 import { WorkOrderStatusCode } from '../_models/workorderstatuscode';
 import { WorkOrderNote } from '../_models/workordernote';
+import { WorkOrderUpdateDto } from '../_models/dto/workorderupdatedto';
+import { WorkOrderAssignDto } from '../_models/dto/updateworkorderassigndto';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,7 +17,7 @@ const httpOptions = {
         Pragma: 'no-cache',
         Expires: '0'
   })
-}
+};
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,14 @@ const httpOptions = {
 export class WorkOrderService {
   baseUrl = environment.apiUrl + 'workorder/';
   constructor(private http: HttpClient) { }
+
+  getAllOpen(): Observable<WorkOrder[]> {
+    return this.http.get<WorkOrder[]>(this.baseUrl + 'GetAllOpen');
+  }
+
+  getAllOpenByUser(userId: number): Observable<WorkOrder[]> {
+    return this.http.get<WorkOrder[]>(this.baseUrl + 'GetAllOpenByUser/' + userId);
+  }
 
   getAllByUser(userId: number): Observable<WorkOrder[]> {
     return this.http.get<WorkOrder[]>(this.baseUrl + 'GetAllByUser/' + userId);
@@ -50,5 +60,13 @@ export class WorkOrderService {
 
   addWorkOrderNote(workOrderNote: WorkOrderNote): Observable<number> {
     return this.http.post<number>(this.baseUrl + 'AddWorkOrderNote', workOrderNote);
+  }
+
+  updateWorkOrder(updateWorkOrder: WorkOrderUpdateDto, userId: number): Observable<number> {
+    return this.http.put<number>(this.baseUrl + 'UpdateWorkOrder/' + userId, updateWorkOrder);
+  }
+
+  assignToLoggedInUser(workOrderAssign: WorkOrderAssignDto): Observable<number> {
+    return this.http.put<number>(this.baseUrl + 'AssignToLoggedInUser', workOrderAssign);
   }
 }

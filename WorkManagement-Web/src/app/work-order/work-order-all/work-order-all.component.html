@@ -1,0 +1,65 @@
+<!-- All work orders table -->
+<div class="card shadow mb-4">
+
+  <div class="card-header py-3">
+    <h6 class="m-0 fontweight-bold text-primary">All Open Work Orders</h6>
+  </div>
+
+  <div class="card-body">
+    <div *ngIf="workOrders?.length > 0" class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Request Date</th>
+            <th>Work Order Type</th>
+            <th>Title</th>
+            <th>Request For</th>
+            <th>Apartment No.</th>
+            <th>Status</th>
+            <th>Assigned To</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Request Date</th>
+            <th>Work Order Type</th>
+            <th>Title</th>
+            <th>Request For</th>
+            <th>Apartment No.</th>
+            <th>Status</th>
+            <th>Assigned To</th>
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <ng-container *ngFor="let workOrder of workOrders">
+            <tr>
+              <td>{{workOrder.requestDate | date: 'MM/dd/yyyy h:mm a'}}</td>
+              <td>{{workOrder.workOrderType.name}}</td>
+              <td>{{workOrder.title}}</td>
+              <td>{{workOrder.requestFor.firstName}} {{workOrder.requestFor.lastName}}</td>
+              <td>{{workOrder.requestFor.apartmentNo}}</td>
+              <td>{{workOrder.status.name}}</td>
+              <td *ngIf="workOrder.assignedTo.id > 0">
+                <!-- {{workOrder.assignedTo.firstName}} {{workOrder.assignedTo.lastName}} -->
+                {{workOrder.assignedTo.userName}}
+              </td>
+              <td *ngIf="workOrder.assignedTo.id === 0">
+                <i>Unassigned</i>
+              </td>
+              <td>
+                <a [routerLink]="[ '/work-order-detail', workOrder.id ]">
+                  <button class="btn btn-primary">Details</button>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="workOrders?.length <= 0" class="table-responsive">
+      No Open Work Orders
+    </div>
+  </div>
+</div>

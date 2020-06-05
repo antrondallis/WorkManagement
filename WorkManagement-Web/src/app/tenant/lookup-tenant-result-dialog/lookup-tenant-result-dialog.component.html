@@ -1,0 +1,60 @@
+<form action="">
+  <div class="row row-space">
+    <div class="col-5">
+      <h1 mat-dialog-title>Search Results</h1>
+    </div>
+    <div class="col-5 text-right">
+      <button
+        mat-raised-accent
+        (click)="searchDialog()"
+        class="btn btn-primary btn-xl"
+        [mat-dialog-close]="data"
+        value="SearchDialog">
+        <fa name="fas fa-arrow-left"></fa>  Back To Search Form
+      </button>
+      
+    </div>
+  </div>
+
+  <hr>
+  <div mat-dialog-content>
+    <div class="row row-space">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Apartment No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Apartment No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <ng-container *ngFor="let tenant of data.tenants">
+            <tr>
+              <td>{{tenant.apartmentNo}}</td>
+              <td>{{tenant.firstName}}</td>
+              <td>{{tenant.lastName}}</td>
+              <td>
+                <button 
+                  mat-raised-button 
+                  color="basic" 
+                  cdkFocusInitial
+                  (click)="selectTenant(tenant.id)">
+                    Select
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>

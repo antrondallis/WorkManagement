@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
@@ -41,7 +42,8 @@ export function tokenGetter() {
            blacklistedRoutes: ['localhost:44342/api/auth']
          }
        }),
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      MatExpansionModule
    ],
    providers: [
       AuthService

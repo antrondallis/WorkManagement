@@ -6,10 +6,10 @@ import pyodbc
 # Work Order Request parameters 
 request_date = '20200328 10:38:09 AM'
 work_order_type_id = 1
-title = 'Mildew Smell'
-description = 'Mildew smell under the kitchen sink. Possible pipe leak'
+title = 'Pool maintenance'
+description = 'Tenant took kids to pool. Says water smelled bad and was green. Can we get someone down there to check the water filter? Thanks!'
 assigned_to = 'null'
-requested_for = 232
+requested_for = 254
 submitted_by = 9999
 status = 1
 

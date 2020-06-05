@@ -1,3 +1,150 @@
-<p>
-  work-order-create works!
-</p>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Work Order Create</h1>
+</div>
+
+<!-- Work Order Create -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 fontweight-bold text-primary">Work Order Create</h6>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="workOrderCreateForm"  (ngSubmit)="submitWorkOrder(workOrderCreateForm)">
+      <div class="row row-space">
+        <div class="col-4">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Work Order Type</mat-label>
+            <mat-select name="WorkOrderType" #workOrderType formControlName="workOrderType">
+              <mat-option
+                *ngFor="let workOrderType of workOrderTypes"
+                [value]="workOrderType.id"
+              >{{ workOrderType.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-8">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space">
+        <div class="col-8">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space mt-4">
+        <div class="col-5">
+          <h4>Tenant</h4>
+        </div>
+
+        <div class="col-5">
+          <button 
+            (click)="lookUpTenant()"
+            mat-raised-button 
+            color="accent"
+            type="button">
+            <fa name="fas fa-search"></fa>
+            Lookup Tenant
+          </button>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space mt-2">
+        <input type="hidden" name="requestFor" formControlName="requestFor">
+        <div class="col-2">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Apartment No</mat-label>
+            <input matInput disabled value="{{selectedTenant?.apartmentNo}}"/>
+          </mat-form-field>
+        </div>
+
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Tenant Name</mat-label>
+            <input matInput disabled value="{{selectedTenant?.firstName}} {{selectedTenant?.lastName}}"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- User Assignment -->
+
+      <!-- Line Break -->
+
+      <div class="row row-space mt-4">
+        <div class="col-5">
+          <h4>Assign To User</h4>
+        </div>
+
+        <div class="col-3">
+          <button 
+            (click)="assignedToLoggedInUser()" 
+            class="mr-3" 
+            mat-raised-button 
+            color="primary"
+            type="button">
+            <fa name="fas fa-fw fa-user"></fa>
+            Me
+          </button>
+
+          <button type="button" mat-raised-button color="accent">
+            <fa name="fas fa-search"></fa>
+            Lookup User
+          </button>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space mt-2">
+        <div class="col-2">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput disabled value="{{selectedUser?.username}}"/>
+          </mat-form-field>
+        </div>
+
+        <div class="col-5">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input matInput disabled value="{{selectedUser?.firstName}} {{selectedUser?.lastName}}"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Line Break -->
+
+      <div class="row row-space mt-2 text-right">
+        <button
+          type="submit"
+          mat-raised-button
+          form="workOrderCreateForm"
+          (click)="submitWorkOrder(workOrderCreateForm)"
+          [disabled]="!workOrderCreateForm.valid"
+          class="btn btn-primary btn-xl"
+          
+          >
+            Submit Work Order
+          </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Look Up Tenant</h1>
+<hr>
+<form #loopUpTenantForm="ngForm" (ngSubmit)="lookUpTenant()">
+  <div mat-dialog-content>
+    <div class="row row-space">
+      <div class="col-10">
+        <mat-form-field style="width:100%" appearance="fill">
+          <mat-label>Apartment No.</mat-label>
+          <input name="note" matInput [(ngModel)]="data.apartmentNo" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row row-space">
+      <div class="col-5">
+        <mat-form-field style="width:100%" appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input name="note" matInput [(ngModel)]="data.firstName" />
+        </mat-form-field>
+      </div>
+
+      <div class="col-5">
+        <mat-form-field style="width:100%" appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input name="note" matInput [(ngModel)]="data.lastName" />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      [mat-dialog-close]="data" 
+      cdkFocusInitial>
+        Lookup Tenant
+    </button>
+  </div>
+</form>
